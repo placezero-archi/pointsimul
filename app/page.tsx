@@ -69,7 +69,7 @@ export default function Home() {
     if (results.length === 0) return;
 
     // TSV 형식으로 변환 (엑셀 붙여넣기용)
-    const header = '통화\t최소 상품 금액\t계산값\t시스템 적립\t유저 출력\t손해율\t첫 사용까지 구매 횟수\t첫 사용까지 구매 금액';
+    const header = '통화\t최소 상품 금액\t계산값\t시스템 적립\t유저 출력\t손해율\t첫 사용까지 구매 횟수\t첫 사용까지 구매 금액\t전액 포인트 구매 필요 금액';
     const rows = results.map((result) => {
       const curr = CURRENCIES[result.currency];
       return [
@@ -81,6 +81,7 @@ export default function Home() {
         `${result.lossRate.toFixed(2)}%`,
         `${result.requiredPurchases}회`,
         formatCurrency(result.requiredAmount, result.currency),
+        formatCurrency(result.fullPointPurchaseAmount, result.currency),
       ].join('\t');
     });
 
@@ -259,6 +260,9 @@ export default function Home() {
                     <th className="px-4 py-3 text-right font-medium text-gray-700">
                       첫 사용까지<br/>구매 금액
                     </th>
+                    <th className="px-4 py-3 text-right font-medium text-gray-700">
+                      전액 포인트 구매<br/>필요 금액
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -308,6 +312,9 @@ export default function Home() {
                         <td className="px-4 py-3 text-right text-gray-700">
                           {formatCurrency(result.requiredAmount, result.currency)}
                         </td>
+                        <td className="px-4 py-3 text-right text-gray-700 font-medium">
+                          {formatCurrency(result.fullPointPurchaseAmount, result.currency)}
+                        </td>
                       </tr>
                     );
                   })}
@@ -332,8 +339,11 @@ export default function Home() {
               <p className="mb-2">
                 <strong>첫 사용까지 구매 횟수:</strong> 최소 사용 단위 이상의 포인트를 모으기 위해 필요한 구매 횟수
               </p>
-              <p>
+              <p className="mb-2">
                 <strong>첫 사용까지 구매 금액:</strong> 최소 사용 단위 이상의 포인트를 모으기 위해 필요한 총 결제 금액
+              </p>
+              <p>
+                <strong>전액 포인트 구매를 위해 필요한 결제 금액:</strong> 최소 상품 금액을 100% 포인트로 구매하기 위해 필요한 총 PG 결제 금액
               </p>
             </div>
           </div>

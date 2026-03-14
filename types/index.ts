@@ -32,4 +32,5 @@ export interface CalculationResult {
   isUsable: boolean; // 1회 사용 가능 여부
   requiredPurchases: number; // 사용 가능까지 필요 횟수
   requiredAmount: number; // 첫 사용까지 필요 금액
+  fullPointPurchaseAmount: number; // 전액 포인트 구매를 위해 필요한 결제 금액
 }

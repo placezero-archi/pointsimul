@@ -49,6 +49,11 @@ export function calculateGamePoint(
     : 0;
   const requiredAmount = minProductPrice * requiredPurchases;
 
+  // 6. 전액 포인트 구매 분석
+  const fullPointPurchaseAmount = userDisplayValue > 0
+    ? minProductPrice * Math.ceil(minProductPrice / userDisplayValue)
+    : 0;
+
   return {
     currency,
     minProductPrice,
@@ -61,6 +66,7 @@ export function calculateGamePoint(
     isUsable,
     requiredPurchases,
     requiredAmount,
+    fullPointPurchaseAmount,
   };
 }
 
