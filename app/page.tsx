@@ -51,6 +51,18 @@ export default function Home() {
     setCopySuccess(false); // 새로 계산하면 복사 상태 초기화
   };
 
+  const applyDefaultValues = () => {
+    setCurrencyInputs({
+      KRW: { minProductPrice: 1100, minUsageUnit: 1 },
+      USD: { minProductPrice: 0.99, minUsageUnit: 0.01 },
+      EUR: { minProductPrice: 0.99, minUsageUnit: 0.01 },
+      JPY: { minProductPrice: 100, minUsageUnit: 1 },
+      TWD: { minProductPrice: 30, minUsageUnit: 1 },
+      THB: { minProductPrice: 30, minUsageUnit: 1 },
+      PHP: { minProductPrice: 50, minUsageUnit: 1 },
+    });
+  };
+
   const handleCopyResults = async () => {
     if (results.length === 0) return;
 
@@ -137,9 +149,17 @@ export default function Home() {
 
         {/* 통화별 입력 */}
         <div className="bg-white rounded-lg shadow p-6 mb-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">
-            통화별 설정
-          </h2>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold text-gray-900">
+              통화별 설정
+            </h2>
+            <button
+              onClick={applyDefaultValues}
+              className="px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-lg hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 transition-colors"
+            >
+              기본값 적용
+            </button>
+          </div>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
