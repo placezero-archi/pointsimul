@@ -120,6 +120,16 @@ export default function Home() {
             step="0.1"
             value={earnRate}
             onChange={(e) => setEarnRate(parseFloat(e.target.value) || 0)}
+            onFocus={(e) => {
+              if (parseFloat(e.target.value) === 0) {
+                e.target.value = '';
+              }
+            }}
+            onBlur={(e) => {
+              if (e.target.value === '') {
+                setEarnRate(0);
+              }
+            }}
             className="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="5"
           />
@@ -163,6 +173,16 @@ export default function Home() {
                             parseFloat(e.target.value) || 0
                           )
                         }
+                        onFocus={(e) => {
+                          if (parseFloat(e.target.value) === 0) {
+                            e.target.value = '';
+                          }
+                        }}
+                        onBlur={(e) => {
+                          if (e.target.value === '') {
+                            updateCurrencyInput(curr.code, 'minProductPrice', 0);
+                          }
+                        }}
                         className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                       />
                     </td>
@@ -178,6 +198,16 @@ export default function Home() {
                             parseFloat(e.target.value) || 0
                           )
                         }
+                        onFocus={(e) => {
+                          if (parseFloat(e.target.value) === 0) {
+                            e.target.value = '';
+                          }
+                        }}
+                        onBlur={(e) => {
+                          if (e.target.value === '') {
+                            updateCurrencyInput(curr.code, 'minUsageUnit', 0);
+                          }
+                        }}
                         className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                       />
                     </td>
