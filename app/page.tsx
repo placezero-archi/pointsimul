@@ -17,6 +17,7 @@ export default function Home() {
   });
 
   const [results, setResults] = useState<CalculationResult[]>([]);
+  const [copySuccess, setCopySuccess] = useState<boolean>(false);
 
   const handleCalculate = () => {
     const calculatedResults = Object.keys(CURRENCIES).map((curr) => {
@@ -30,6 +31,35 @@ export default function Home() {
       );
     });
     setResults(calculatedResults);
+    setCopySuccess(false); // 새로 계산하면 복사 상태 초기화
+  };
+
+  const handleCopyResults = async () => {
+    if (results.length === 0) return;
+
+    // TSV 형식으로 변환 (엑셀 붙여넣기용)
+    const header = '통화\t최소 상품 금액\t계산값\t시스템 적립\t유저 출력\t손해율';
+    const rows = results.map((result) => {
+      const curr = CURRENCIES[result.currency];
+      return [
+        curr.name,
+        formatCurrency(result.minProductPrice, result.currency),
+        `${formatGamePoint(result.rawValue)} GP`,
+        `${formatGamePoint(result.systemValue, 3)} GP`,
+        `${formatGamePoint(result.userDisplayValue)} GP`,
+        `${result.lossRate.toFixed(2)}%`,
+      ].join('\t');
+    });
+
+    const tsvData = [header, ...rows].join('\n');
+
+    try {
+      await navigator.clipboard.writeText(tsvData);
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000); // 2초 후 메시지 사라짐
+    } catch (err) {
+      alert('복사에 실패했습니다. 브라우저 권한을 확인해주세요.');
+    }
   };
 
   const updateCurrencyInput = (
@@ -147,9 +177,27 @@ export default function Home() {
         {/* 결과 테이블 */}
         {results.length > 0 && (
           <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              계산 결과
-            </h2>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-gray-900">
+                계산 결과
+              </h2>
+              <button
+                onClick={handleCopyResults}
+                className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 transition-colors flex items-center gap-2"
+              >
+                {copySuccess ? (
+                  <>
+                    <span>✓</span>
+                    <span>복사 완료!</span>
+                  </>
+                ) : (
+                  <>
+                    <span>📋</span>
+                    <span>엑셀 복사</span>
+                  </>
+                )}
+              </button>
+            </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
