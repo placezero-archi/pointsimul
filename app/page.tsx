@@ -38,7 +38,7 @@ export default function Home() {
     if (results.length === 0) return;
 
     // TSV 형식으로 변환 (엑셀 붙여넣기용)
-    const header = '통화\t최소 상품 금액\t계산값\t시스템 적립\t유저 출력\t손해율';
+    const header = '통화\t최소 상품 금액\t계산값\t시스템 적립\t유저 출력\t손해율\t사용가능\t필요횟수\t필요금액';
     const rows = results.map((result) => {
       const curr = CURRENCIES[result.currency];
       return [
@@ -48,6 +48,9 @@ export default function Home() {
         `${formatGamePoint(result.systemValue, 3)} GP`,
         `${formatGamePoint(result.userDisplayValue)} GP`,
         `${result.lossRate.toFixed(2)}%`,
+        result.isUsable ? 'O' : 'X',
+        `${result.requiredPurchases}회`,
+        formatCurrency(result.requiredAmount, result.currency),
       ].join('\t');
     });
 
@@ -220,6 +223,15 @@ export default function Home() {
                     <th className="px-4 py-3 text-right font-medium text-gray-700">
                       손해율
                     </th>
+                    <th className="px-4 py-3 text-center font-medium text-gray-700">
+                      사용가능
+                    </th>
+                    <th className="px-4 py-3 text-right font-medium text-gray-700">
+                      필요횟수
+                    </th>
+                    <th className="px-4 py-3 text-right font-medium text-gray-700">
+                      필요금액
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -252,6 +264,33 @@ export default function Home() {
                           >
                             {result.lossRate.toFixed(2)}%
                           </span>
+                        </td>
+                        <td className="px-4 py-3 text-center">
+                          <span
+                            className={
+                              result.isUsable
+                                ? 'text-green-600 font-medium text-lg'
+                                : 'text-red-600 font-medium text-lg'
+                            }
+                          >
+                            {result.isUsable ? '✅' : '❌'}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-right">
+                          <span
+                            className={
+                              result.requiredPurchases === 1
+                                ? 'text-green-600 font-medium'
+                                : result.requiredPurchases <= 5
+                                ? 'text-orange-600 font-medium'
+                                : 'text-red-600 font-medium'
+                            }
+                          >
+                            {result.requiredPurchases}회
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-right text-gray-700">
+                          {formatCurrency(result.requiredAmount, result.currency)}
                         </td>
                       </tr>
                     );

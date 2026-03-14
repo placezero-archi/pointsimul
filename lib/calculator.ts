@@ -42,14 +42,25 @@ export function calculateGamePoint(
     ? ((systemValue - userDisplayValue) / systemValue) * 100
     : 0;
 
+  // 5. 사용 가능성 분석
+  const isUsable = userDisplayValue >= minUsageUnit;
+  const requiredPurchases = userDisplayValue > 0
+    ? Math.ceil(minUsageUnit / userDisplayValue)
+    : 0;
+  const requiredAmount = minProductPrice * requiredPurchases;
+
   return {
     currency,
     minProductPrice,
     earnRate,
+    minUsageUnit,
     rawValue,
     systemValue,
     userDisplayValue,
     lossRate,
+    isUsable,
+    requiredPurchases,
+    requiredAmount,
   };
 }
 
