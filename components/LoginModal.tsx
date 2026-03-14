@@ -25,10 +25,10 @@ export default function LoginModal({ onSuccess }: LoginModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full mx-4">
+    <div className="fixed inset-0 bg-white flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full mx-4 border border-gray-200">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">
-          게임포인트 시뮬레이터
+          포인트 시뮬레이터
         </h2>
         <p className="text-gray-600 mb-6">
           내부 사용자 전용 - 비밀번호를 입력하세요

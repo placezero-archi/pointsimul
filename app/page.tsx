@@ -130,10 +130,10 @@ export default function Home() {
     <main className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          게임포인트 시뮬레이터
+          포인트 시뮬레이터
         </h1>
         <p className="text-gray-600 mb-8">
-          통화별 최저가 상품 결제 시 적립되는 게임포인트를 미리 계산해보세요
+          통화별 최저가 상품 결제 시 적립되는 포인트를 미리 계산해보세요
         </p>
 
         {/* 적립률 입력 */}
