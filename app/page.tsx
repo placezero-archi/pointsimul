@@ -61,7 +61,7 @@ export default function Home() {
       return [
         curr.name,
         formatCurrency(result.minProductPrice, result.currency),
-        `${formatGamePoint(result.rawValue)} GP`,
+        `${result.rawValue} GP`,
         `${formatGamePoint(result.systemValue, 3)} GP`,
         `${formatGamePoint(result.userDisplayValue)} GP`,
         `${result.lossRate.toFixed(2)}%`,
@@ -267,7 +267,7 @@ export default function Home() {
                           {formatCurrency(result.minProductPrice, result.currency)}
                         </td>
                         <td className="px-4 py-3 text-right text-gray-700">
-                          {formatGamePoint(result.rawValue)} GP
+                          {result.rawValue} GP
                         </td>
                         <td className="px-4 py-3 text-right text-blue-600 font-medium">
                           {formatGamePoint(result.systemValue, 3)} GP
