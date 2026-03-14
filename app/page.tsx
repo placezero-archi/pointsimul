@@ -24,10 +24,14 @@ export default function Home() {
   const [results, setResults] = useState<CalculationResult[]>([]);
   const [copySuccess, setCopySuccess] = useState<boolean>(false);
 
-  // 인증 체크
+  // 인증 체크 및 보안 클리어
   useEffect(() => {
     const auth = localStorage.getItem('auth');
     setIsAuthenticated(auth === 'authenticated');
+    
+    // 보안: 이전 저장 데이터 제거
+    localStorage.removeItem('earnRate');
+    localStorage.removeItem('currencyInputs');
   }, []);
 
   const handleCalculate = () => {
