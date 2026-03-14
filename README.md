@@ -37,11 +37,19 @@
 # 의존성 설치
 npm install
 
+# 환경 변수 설정
+cp .env.local.example .env.local
+# .env.local 파일을 열어서 NEXT_PUBLIC_APP_PASSWORD 설정
+
 # 개발 서버 실행
 npm run dev
 ```
 
 서버: http://localhost:3000
+
+**로그인:**
+- `.env.local` 파일에 설정한 비밀번호로 로그인
+- 인증 정보는 localStorage에 저장됨
 
 ### 빌드
 
@@ -70,7 +78,11 @@ git push -u origin main
 1. [Vercel](https://vercel.com)에 로그인
 2. "New Project" 클릭
 3. GitHub 리포지토리 연결
-4. 자동 배포 완료!
+4. **Environment Variables 설정:**
+   - `NEXT_PUBLIC_APP_PASSWORD` = 원하는 비밀번호
+5. Deploy 클릭!
+
+**⚠️ 중요:** 배포 후 Environment Variables에 비밀번호를 반드시 설정하세요!
 
 ## 프로젝트 구조
 

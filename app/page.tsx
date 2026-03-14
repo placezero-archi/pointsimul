@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Currency, CurrencyInput, CalculationResult } from '@/types';
 import { CURRENCIES, calculateGamePoint, formatCurrency, formatGamePoint } from '@/lib/calculator';
+import LoginModal from '@/components/LoginModal';
 
 const DEFAULT_EARN_RATE = 5;
 const DEFAULT_CURRENCY_INPUTS: Record<Currency, CurrencyInput> = {
@@ -16,14 +17,23 @@ const DEFAULT_CURRENCY_INPUTS: Record<Currency, CurrencyInput> = {
 };
 
 export default function Home() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [earnRate, setEarnRate] = useState<number>(DEFAULT_EARN_RATE);
   const [currencyInputs, setCurrencyInputs] = useState<Record<Currency, CurrencyInput>>(DEFAULT_CURRENCY_INPUTS);
 
   const [results, setResults] = useState<CalculationResult[]>([]);
   const [copySuccess, setCopySuccess] = useState<boolean>(false);
 
+  // 인증 체크
+  useEffect(() => {
+    const auth = localStorage.getItem('auth');
+    setIsAuthenticated(auth === 'authenticated');
+  }, []);
+
   // localStorage에서 값 불러오기
   useEffect(() => {
+    if (!isAuthenticated) return;
+
     const savedEarnRate = localStorage.getItem('earnRate');
     const savedCurrencyInputs = localStorage.getItem('currencyInputs');
 
@@ -38,7 +48,7 @@ export default function Home() {
         console.error('Failed to parse saved currency inputs:', e);
       }
     }
-  }, []);
+  }, [isAuthenticated]);
 
   // earnRate 변경 시 localStorage에 저장
   useEffect(() => {
@@ -111,6 +121,10 @@ export default function Home() {
       },
     }));
   };
+
+  if (!isAuthenticated) {
+    return <LoginModal onSuccess={() => setIsAuthenticated(true)} />;
+  }
 
   return (
     <main className="min-h-screen bg-gray-50 py-8 px-4">
