@@ -8,6 +8,7 @@ export const CURRENCIES: Record<Currency, CurrencyInfo> = {
   JPY: { code: 'JPY', name: '엔화', symbol: '¥', decimals: 0 },
   TWD: { code: 'TWD', name: '대만달러', symbol: 'NT$', decimals: 0 },
   THB: { code: 'THB', name: '태국바트', symbol: '฿', decimals: 2 },
+  PHP: { code: 'PHP', name: '필리핀페소', symbol: '₱', decimals: 2 },
 };
 
 /**

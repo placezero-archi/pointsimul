@@ -13,6 +13,7 @@ export default function Home() {
     JPY: { minProductPrice: 100, minUsageUnit: 10 },
     TWD: { minProductPrice: 30, minUsageUnit: 10 },
     THB: { minProductPrice: 30, minUsageUnit: 1.0 },
+    PHP: { minProductPrice: 50, minUsageUnit: 1.0 },
   });
 
   const [results, setResults] = useState<CalculationResult[]>([]);

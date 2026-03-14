@@ -1,5 +1,5 @@
 // 지원 통화 타입
-export type Currency = 'KRW' | 'USD' | 'EUR' | 'JPY' | 'TWD' | 'THB';
+export type Currency = 'KRW' | 'USD' | 'EUR' | 'JPY' | 'TWD' | 'THB' | 'PHP';
 
 // 통화 정보
 export interface CurrencyInfo {
