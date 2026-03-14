@@ -62,7 +62,7 @@ export default function Home() {
           input.minUsageUnit
         );
       })
-      .filter((result) => result.minProductPrice > 0); // 최소 상품 금액이 0인 통화는 제외
+      .filter((result) => result.minProductPrice > 0 || result.minUsageUnit > 0); // 둘 다 0인 통화만 제외
     setResults(calculatedResults);
     setCopySuccess(false); // 새로 계산하면 복사 상태 초기화
   };
