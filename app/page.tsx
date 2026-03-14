@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Currency, CurrencyInput, CalculationResult } from '@/types';
 import { CURRENCIES, calculateGamePoint, formatCurrency, formatGamePoint } from '@/lib/calculator';
 import LoginModal from '@/components/LoginModal';
@@ -23,6 +23,8 @@ export default function Home() {
 
   const [results, setResults] = useState<CalculationResult[]>([]);
   const [copySuccess, setCopySuccess] = useState<boolean>(false);
+  
+  const resultsRef = useRef<HTMLDivElement>(null);
 
   // 인증 체크 및 보안 클리어
   useEffect(() => {
@@ -49,6 +51,11 @@ export default function Home() {
       .filter((result) => result.minProductPrice > 0 || result.minUsageUnit > 0); // 둘 다 0인 통화만 제외
     setResults(calculatedResults);
     setCopySuccess(false); // 새로 계산하면 복사 상태 초기화
+    
+    // 결과 섹션으로 스크롤
+    setTimeout(() => {
+      resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
   };
 
   const applyDefaultValues = () => {
@@ -249,7 +256,7 @@ export default function Home() {
 
         {/* 결과 테이블 */}
         {results.length > 0 && (
-          <div className="bg-white rounded-lg shadow p-6">
+          <div ref={resultsRef} className="bg-white rounded-lg shadow p-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold text-gray-900">
                 계산 결과
