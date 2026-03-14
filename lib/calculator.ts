@@ -62,11 +62,10 @@ export function formatCurrency(value: number, currency: Currency): string {
 }
 
 /**
- * 게임포인트를 포맷 (소수점이 0이면 정수로 표시)
+ * 게임포인트를 포맷 (trailing zeros 제거)
  */
 export function formatGamePoint(value: number, decimals: number = 2): string {
   const fixed = value.toFixed(decimals);
-  // 소수점이 모두 0이면 정수로 표시
   const num = parseFloat(fixed);
-  return num % 1 === 0 ? num.toFixed(0) : fixed;
+  return num.toString(); // trailing zeros 자동 제거
 }
