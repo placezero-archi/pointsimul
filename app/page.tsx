@@ -184,7 +184,7 @@ export default function Home() {
               <div className="flex flex-col items-end gap-1">
                 <button
                   onClick={handleCopyResults}
-                  className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 transition-colors flex items-center gap-2"
+                  className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-colors flex items-center gap-2"
                 >
                   {copySuccess ? (
                     <>
