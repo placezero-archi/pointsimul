@@ -1,0 +1,68 @@
+import { Currency, CurrencyInfo, CalculationResult } from '@/types';
+
+// 통화 정보 상수
+export const CURRENCIES: Record<Currency, CurrencyInfo> = {
+  KRW: { code: 'KRW', name: '한화', symbol: '₩', decimals: 0 },
+  USD: { code: 'USD', name: '달러', symbol: '$', decimals: 2 },
+  EUR: { code: 'EUR', name: '유로', symbol: '€', decimals: 2 },
+  JPY: { code: 'JPY', name: '엔화', symbol: '¥', decimals: 0 },
+  TWD: { code: 'TWD', name: '대만달러', symbol: 'NT$', decimals: 0 },
+  THB: { code: 'THB', name: '태국바트', symbol: '฿', decimals: 2 },
+};
+
+/**
+ * 소수점 n번째 자리에서 버림
+ */
+function floorToDecimal(value: number, decimals: number): number {
+  const factor = Math.pow(10, decimals);
+  return Math.floor(value * factor) / factor;
+}
+
+/**
+ * 게임포인트 계산
+ */
+export function calculateGamePoint(
+  currency: Currency,
+  minProductPrice: number,
+  earnRate: number,
+  minUsageUnit: number
+): CalculationResult {
+  // 1. 계산값 (그대로)
+  const rawValue = minProductPrice * (earnRate / 100);
+
+  // 2. 시스템 적립값 (소수점 넷째자리 버림 → 셋째자리까지)
+  const systemValue = floorToDecimal(rawValue, 3);
+
+  // 3. 유저 출력값 (소수점 셋째자리 버림 → 둘째자리까지)
+  const userDisplayValue = floorToDecimal(systemValue, 2);
+
+  // 4. 손해율 계산
+  const lossRate = systemValue > 0
+    ? ((systemValue - userDisplayValue) / systemValue) * 100
+    : 0;
+
+  return {
+    currency,
+    minProductPrice,
+    earnRate,
+    rawValue,
+    systemValue,
+    userDisplayValue,
+    lossRate,
+  };
+}
+
+/**
+ * 숫자를 통화 형식으로 포맷
+ */
+export function formatCurrency(value: number, currency: Currency): string {
+  const info = CURRENCIES[currency];
+  return `${info.symbol}${value.toFixed(info.decimals)}`;
+}
+
+/**
+ * 게임포인트를 포맷 (항상 소수점 둘째자리까지)
+ */
+export function formatGamePoint(value: number): string {
+  return value.toFixed(2);
+}
