@@ -67,7 +67,7 @@ export default function Home() {
     if (results.length === 0) return;
 
     // TSV 형식으로 변환 (엑셀 붙여넣기용)
-    const header = '통화\t최소 상품 금액\t계산값\t시스템 적립\t유저 출력\t손해율\t첫 GP 사용까지 필요 구매 횟수\t첫 GP 사용까지 필요 구매 금액\t전액 GP 구매까지 필요 구매 금액';
+    const header = '통화\t최소 상품 금액\t계산값\t시스템 적립\t유저 출력\t손해율\t첫 포인트 사용까지 필요 구매 횟수\t첫 포인트 사용까지 필요 구매 금액\t전액 포인트 구매까지 필요 구매 금액';
     const rows = results.map((result) => {
       const curr = CURRENCIES[result.currency];
       return [
@@ -119,7 +119,7 @@ export default function Home() {
           GP 시뮬레이터
         </h1>
         <p className="text-gray-600 mb-8">
-          통화별 최저가 상품 결제 시 적립되는 GP를 미리 계산해보세요
+          통화별 최저가 상품 결제 시 적립되는 포인트를 미리 계산해보세요
         </p>
 
         {/* 적립률 입력 */}
@@ -295,13 +295,13 @@ export default function Home() {
                       손해율
                     </th>
                     <th className="px-4 py-3 text-right font-medium text-gray-700">
-                      첫 GP 사용까지<br/>필요 구매 횟수
+                      첫 포인트 사용까지<br/>필요 구매 횟수
                     </th>
                     <th className="px-4 py-3 text-right font-medium text-gray-700">
-                      첫 GP 사용까지<br/>필요 구매 금액
+                      첫 포인트 사용까지<br/>필요 구매 금액
                     </th>
                     <th className="px-4 py-3 text-right font-medium text-gray-700">
-                      전액 GP 구매까지<br/>필요 구매 금액
+                      전액 포인트 구매까지<br/>필요 구매 금액
                     </th>
                   </tr>
                 </thead>
@@ -377,13 +377,13 @@ export default function Home() {
                 <strong>손해율:</strong> 시스템 적립 대비 유저 출력의 손실 비율
               </p>
               <p className="mb-2">
-                <strong>첫 GP 사용까지 필요 구매 횟수:</strong> 최소 사용 단위 이상의 GP를 모으기 위해 필요한 구매 횟수
+                <strong>첫 포인트 사용까지 필요 구매 횟수:</strong> 최소 사용 단위 이상의 포인트를 모으기 위해 필요한 구매 횟수
               </p>
               <p className="mb-2">
-                <strong>첫 GP 사용까지 필요 구매 금액:</strong> 최소 사용 단위 이상의 GP를 모으기 위해 필요한 총 결제 금액
+                <strong>첫 포인트 사용까지 필요 구매 금액:</strong> 최소 사용 단위 이상의 포인트를 모으기 위해 필요한 총 결제 금액
               </p>
               <p>
-                <strong>전액 GP 구매까지 필요 구매 금액:</strong> 최소 상품을 100% GP로 구매하기 위한 총 결제 금액
+                <strong>전액 포인트 구매까지 필요 구매 금액:</strong> 최소 상품을 100% 포인트로 구매하기 위한 총 결제 금액
               </p>
             </div>
           </div>
