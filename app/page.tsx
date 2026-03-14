@@ -1,23 +1,54 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Currency, CurrencyInput, CalculationResult } from '@/types';
 import { CURRENCIES, calculateGamePoint, formatCurrency, formatGamePoint } from '@/lib/calculator';
 
+const DEFAULT_EARN_RATE = 5;
+const DEFAULT_CURRENCY_INPUTS: Record<Currency, CurrencyInput> = {
+  KRW: { minProductPrice: 1000, minUsageUnit: 10 },
+  USD: { minProductPrice: 0.99, minUsageUnit: 1.0 },
+  EUR: { minProductPrice: 0.99, minUsageUnit: 1.0 },
+  JPY: { minProductPrice: 100, minUsageUnit: 10 },
+  TWD: { minProductPrice: 30, minUsageUnit: 10 },
+  THB: { minProductPrice: 30, minUsageUnit: 1.0 },
+  PHP: { minProductPrice: 50, minUsageUnit: 1.0 },
+};
+
 export default function Home() {
-  const [earnRate, setEarnRate] = useState<number>(5);
-  const [currencyInputs, setCurrencyInputs] = useState<Record<Currency, CurrencyInput>>({
-    KRW: { minProductPrice: 1000, minUsageUnit: 10 },
-    USD: { minProductPrice: 0.99, minUsageUnit: 1.0 },
-    EUR: { minProductPrice: 0.99, minUsageUnit: 1.0 },
-    JPY: { minProductPrice: 100, minUsageUnit: 10 },
-    TWD: { minProductPrice: 30, minUsageUnit: 10 },
-    THB: { minProductPrice: 30, minUsageUnit: 1.0 },
-    PHP: { minProductPrice: 50, minUsageUnit: 1.0 },
-  });
+  const [earnRate, setEarnRate] = useState<number>(DEFAULT_EARN_RATE);
+  const [currencyInputs, setCurrencyInputs] = useState<Record<Currency, CurrencyInput>>(DEFAULT_CURRENCY_INPUTS);
 
   const [results, setResults] = useState<CalculationResult[]>([]);
   const [copySuccess, setCopySuccess] = useState<boolean>(false);
+
+  // localStorage에서 값 불러오기
+  useEffect(() => {
+    const savedEarnRate = localStorage.getItem('earnRate');
+    const savedCurrencyInputs = localStorage.getItem('currencyInputs');
+
+    if (savedEarnRate) {
+      setEarnRate(parseFloat(savedEarnRate));
+    }
+
+    if (savedCurrencyInputs) {
+      try {
+        setCurrencyInputs(JSON.parse(savedCurrencyInputs));
+      } catch (e) {
+        console.error('Failed to parse saved currency inputs:', e);
+      }
+    }
+  }, []);
+
+  // earnRate 변경 시 localStorage에 저장
+  useEffect(() => {
+    localStorage.setItem('earnRate', earnRate.toString());
+  }, [earnRate]);
+
+  // currencyInputs 변경 시 localStorage에 저장
+  useEffect(() => {
+    localStorage.setItem('currencyInputs', JSON.stringify(currencyInputs));
+  }, [currencyInputs]);
 
   const handleCalculate = () => {
     const calculatedResults = Object.keys(CURRENCIES).map((curr) => {
