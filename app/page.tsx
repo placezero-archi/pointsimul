@@ -192,10 +192,7 @@ export default function Home() {
                       <span>복사 완료!</span>
                     </>
                   ) : (
-                    <>
-                      <span>📋</span>
-                      <span>계산 결과 복사</span>
-                    </>
+                    <span>계산 결과 복사</span>
                   )}
                 </button>
                 <p className="text-xs text-gray-500">엑셀에 붙여넣기하세요</p>
