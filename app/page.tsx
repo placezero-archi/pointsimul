@@ -188,7 +188,7 @@ export default function Home() {
                           {formatGamePoint(result.rawValue)} GP
                         </td>
                         <td className="px-4 py-3 text-right text-blue-600 font-medium">
-                          {result.systemValue.toFixed(3)} GP
+                          {formatGamePoint(result.systemValue, 3)} GP
                         </td>
                         <td className="px-4 py-3 text-right text-green-600 font-medium">
                           {formatGamePoint(result.userDisplayValue)} GP

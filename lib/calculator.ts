@@ -61,8 +61,11 @@ export function formatCurrency(value: number, currency: Currency): string {
 }
 
 /**
- * 게임포인트를 포맷 (항상 소수점 둘째자리까지)
+ * 게임포인트를 포맷 (소수점이 0이면 정수로 표시)
  */
-export function formatGamePoint(value: number): string {
-  return value.toFixed(2);
+export function formatGamePoint(value: number, decimals: number = 2): string {
+  const fixed = value.toFixed(decimals);
+  // 소수점이 모두 0이면 정수로 표시
+  const num = parseFloat(fixed);
+  return num % 1 === 0 ? num.toFixed(0) : fixed;
 }
