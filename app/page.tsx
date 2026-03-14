@@ -157,7 +157,7 @@ export default function Home() {
                       통화
                     </th>
                     <th className="px-4 py-3 text-right font-medium text-gray-700">
-                      최저가
+                      최소 상품 금액
                     </th>
                     <th className="px-4 py-3 text-right font-medium text-gray-700">
                       계산값
