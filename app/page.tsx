@@ -181,22 +181,25 @@ export default function Home() {
               <h2 className="text-xl font-semibold text-gray-900">
                 계산 결과
               </h2>
-              <button
-                onClick={handleCopyResults}
-                className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 transition-colors flex items-center gap-2"
-              >
-                {copySuccess ? (
-                  <>
-                    <span>✓</span>
-                    <span>복사 완료!</span>
-                  </>
-                ) : (
-                  <>
-                    <span>📋</span>
-                    <span>엑셀 복사</span>
-                  </>
-                )}
-              </button>
+              <div className="flex flex-col items-end gap-1">
+                <button
+                  onClick={handleCopyResults}
+                  className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 transition-colors flex items-center gap-2"
+                >
+                  {copySuccess ? (
+                    <>
+                      <span>✓</span>
+                      <span>복사 완료!</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>📋</span>
+                      <span>계산 결과 복사</span>
+                    </>
+                  )}
+                </button>
+                <p className="text-xs text-gray-500">엑셀에 붙여넣기하세요</p>
+              </div>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
