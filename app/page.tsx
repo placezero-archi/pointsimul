@@ -5,15 +5,15 @@ import { Currency, CurrencyInput, CalculationResult } from '@/types';
 import { CURRENCIES, calculateGamePoint, formatCurrency, formatGamePoint } from '@/lib/calculator';
 import LoginModal from '@/components/LoginModal';
 
-const DEFAULT_EARN_RATE = 5;
+const DEFAULT_EARN_RATE = 0;
 const DEFAULT_CURRENCY_INPUTS: Record<Currency, CurrencyInput> = {
-  KRW: { minProductPrice: 1000, minUsageUnit: 10 },
-  USD: { minProductPrice: 0.99, minUsageUnit: 1.0 },
-  EUR: { minProductPrice: 0.99, minUsageUnit: 1.0 },
-  JPY: { minProductPrice: 100, minUsageUnit: 10 },
-  TWD: { minProductPrice: 30, minUsageUnit: 10 },
-  THB: { minProductPrice: 30, minUsageUnit: 1.0 },
-  PHP: { minProductPrice: 50, minUsageUnit: 1.0 },
+  KRW: { minProductPrice: 0, minUsageUnit: 0 },
+  USD: { minProductPrice: 0, minUsageUnit: 0 },
+  EUR: { minProductPrice: 0, minUsageUnit: 0 },
+  JPY: { minProductPrice: 0, minUsageUnit: 0 },
+  TWD: { minProductPrice: 0, minUsageUnit: 0 },
+  THB: { minProductPrice: 0, minUsageUnit: 0 },
+  PHP: { minProductPrice: 0, minUsageUnit: 0 },
 };
 
 export default function Home() {
@@ -29,36 +29,6 @@ export default function Home() {
     const auth = localStorage.getItem('auth');
     setIsAuthenticated(auth === 'authenticated');
   }, []);
-
-  // localStorage에서 값 불러오기
-  useEffect(() => {
-    if (!isAuthenticated) return;
-
-    const savedEarnRate = localStorage.getItem('earnRate');
-    const savedCurrencyInputs = localStorage.getItem('currencyInputs');
-
-    if (savedEarnRate) {
-      setEarnRate(parseFloat(savedEarnRate));
-    }
-
-    if (savedCurrencyInputs) {
-      try {
-        setCurrencyInputs(JSON.parse(savedCurrencyInputs));
-      } catch (e) {
-        console.error('Failed to parse saved currency inputs:', e);
-      }
-    }
-  }, [isAuthenticated]);
-
-  // earnRate 변경 시 localStorage에 저장
-  useEffect(() => {
-    localStorage.setItem('earnRate', earnRate.toString());
-  }, [earnRate]);
-
-  // currencyInputs 변경 시 localStorage에 저장
-  useEffect(() => {
-    localStorage.setItem('currencyInputs', JSON.stringify(currencyInputs));
-  }, [currencyInputs]);
 
   const handleCalculate = () => {
     const calculatedResults = Object.keys(CURRENCIES)
