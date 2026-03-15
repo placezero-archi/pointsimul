@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Currency, CurrencyInput, CalculationResult } from '@/types';
 import { CURRENCIES, calculateGamePoint, formatCurrency, formatGamePoint } from '@/lib/calculator';
-import LoginModal from '@/components/LoginModal';
 
 const DEFAULT_EARN_RATE = 0;
 const DEFAULT_CURRENCY_INPUTS: Record<Currency, CurrencyInput> = {
@@ -17,7 +16,6 @@ const DEFAULT_CURRENCY_INPUTS: Record<Currency, CurrencyInput> = {
 };
 
 export default function Home() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [earnRate, setEarnRate] = useState<number>(DEFAULT_EARN_RATE);
   const [currencyInputs, setCurrencyInputs] = useState<Record<Currency, CurrencyInput>>(DEFAULT_CURRENCY_INPUTS);
 
@@ -26,14 +24,12 @@ export default function Home() {
   
   const resultsRef = useRef<HTMLDivElement>(null);
 
-  // 인증 체크 및 보안 클리어
+  // 페이지 로드 시 데이터 클리어
   useEffect(() => {
-    const auth = localStorage.getItem('auth');
-    setIsAuthenticated(auth === 'authenticated');
-    
     // 보안: 이전 저장 데이터 제거
     localStorage.removeItem('earnRate');
     localStorage.removeItem('currencyInputs');
+    localStorage.removeItem('auth');
   }, []);
 
   const handleCalculate = () => {
@@ -114,10 +110,6 @@ export default function Home() {
       },
     }));
   };
-
-  if (!isAuthenticated) {
-    return <LoginModal onSuccess={() => setIsAuthenticated(true)} />;
-  }
 
   return (
     <main className="min-h-screen bg-gray-50 py-8 px-4">
