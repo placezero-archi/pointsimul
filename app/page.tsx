@@ -55,6 +55,7 @@ export default function Home() {
   };
 
   const applyDefaultValues = () => {
+    setEarnRate(5);
     setCurrencyInputs({
       KRW: { minProductPrice: 1100, minUsageUnit: 1 },
       USD: { minProductPrice: 0.99, minUsageUnit: 0.01 },
